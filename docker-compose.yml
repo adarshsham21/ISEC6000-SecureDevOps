@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  api:
+    image: ghcr.io/saleor/saleor:latest
+
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://saleor:saleor@db/saleor
+      REDIS_URL: redis://redis:6379/0
+      ALLOWED_HOSTS: "localhost,127.0.0.1,172.21.0.4"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: saleor
+      POSTGRES_USER: saleor
+      POSTGRES_PASSWORD: saleor
+
+  redis:
+    image: redis:6

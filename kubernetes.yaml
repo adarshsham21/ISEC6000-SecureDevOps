@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saleor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: saleor
+  template:
+    metadata:
+      labels:
+        app: saleor
+    spec:
+      containers:
+      - name: saleor-api
+        image: saleor/saleor:latest  # Updated to use the latest tag
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+      - name: saleor-dashboard
+        image: saleor/dashboard:latest  # Updated to use the latest tag
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
